@@ -2,6 +2,7 @@ package com.example.springjwt.filter;
 
 import com.example.springjwt.service.CustomUserDetailService;
 import com.example.springjwt.util.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -38,7 +40,9 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         if (phoneNumber != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            log.error("didalam jwt Filter");
             UserDetails userDetails = customUserDetailService.loadUserByUsername(phoneNumber);
+            log.error("after user details jwt filter");
 
             if (jwtUtil.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =

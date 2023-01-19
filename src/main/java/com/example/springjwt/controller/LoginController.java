@@ -22,8 +22,8 @@ public class LoginController {
 
     @PostMapping("/v2/auth/login")
     public String generateToken(@RequestBody LoginEntity loginEntity) throws Exception {
-        log.info("endpoint hit");
         try {
+            log.info("endpoint hit");
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginEntity.getPhone(), loginEntity.getPassword())
             );
